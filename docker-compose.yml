@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  bot:
+    container_name: "LovelyLegends-Bot"
+    build:
+      context: .
+    stop_signal: SIGINT
+    restart: unless-stopped
+    command: "node LovelyLegends.js"
+    volumes:
+      - .:/app
+    networks:
+      - my_custom_network
+
+networks:
+  my_custom_network:
+    external: true
