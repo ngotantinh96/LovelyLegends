@@ -173,9 +173,14 @@ class LovelyLegends {
                         if (tapResult.success) {
                             this.log(`Tap thành công | Năng lượng còn ${this.convertNumber(tapResult.energy)}/${this.convertNumber(tapResult.maxEnergy)} | Balance : ${this.convertNumber(tapResult.balance)} | Booster: ${maxBooster - tapResult.fullEnergyBonusCount}/${maxBooster}`, 'success');
                             let currentTimestamp = Math.floor(Date.now() / 1000);
-                            let timeDifference = currentTimestamp - tapResult.lastFullEnergyBonusTimestamp;
 
-                            if (tapResult.energy <= 10 && tapResult.fullEnergyBonusCount < maxBooster && timeDifference > 3600) {
+                            let timeDifference = currentTimestamp - tapResult.lastFullEnergyBonusTimestamp;
+                            let newBoosterDifference = currentTimestamp - tapResult.firstFullEnergyBonusTimestamp;
+
+                            if (tapResult.energy <= 10 && 
+                                (tapResult.fullEnergyBonusCount < maxBooster || 
+                                    (tapResult.fullEnergyBonusCount == 6 && newBoosterDifference > 86400)) && 
+                                timeDifference > 3600) {
                                 const refillResult = await this.callRefillAPI(initData);
                                 if (refillResult.success) {
                                     this.log(`Boost năng lượng thành công | Năng lượng còn ${this.convertNumber(refillResult.energy)}/${this.convertNumber(refillResult.maxEnergy)} | Booster: ${maxBooster - refillResult.fullEnergyBonusCount}/${maxBooster}`, 'success');
