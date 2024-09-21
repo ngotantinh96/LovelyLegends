@@ -16,8 +16,7 @@ class LovelyLegends {
             "Sec-Fetch-Dest": "empty",
             "Sec-Fetch-Mode": "cors",
             "Sec-Fetch-Site": "same-site",
-            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
-            "X-Telegram-Auth": "user=%7B%22id%22%3A1591107526%2C%22first_name%22%3A%22Anh%20%C4%90%C3%A0o%20%F0%9F%8D%85%20%F0%9F%90%88%E2%80%8D%E2%AC%9B%20%F0%9F%90%B0%20%F0%9F%90%B8%22%2C%22last_name%22%3A%22%F0%9F%8C%B1SEED%22%2C%22username%22%3A%22Daodayne%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&chat_instance=-5039207455940252281&chat_type=sender&auth_date=1726855885&hash=84904d8632f3d2d8e5f9ac50a09bdb36c1db9a8dc1c5a90a812de61b096d4668"
+            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
         };
         this.config = this.loadConfig();
     }
@@ -132,6 +131,7 @@ class LovelyLegends {
 
         while (true) {
             for (let i = 0; i < data.length; i++) {
+                this.headers["X-Telegram-Auth"] = data[i];
                 let initData = {};
 
                 // Step 3: Loop through each key-value pair
