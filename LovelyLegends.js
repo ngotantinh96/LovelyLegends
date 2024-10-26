@@ -82,6 +82,24 @@ class LovelyLegends {
         }
     }
 
+    async callCheckDailyAPI(initData) {
+        const startUrl = "https://playback.lovely.finance/daily";
+        const startPayload = { initData: initData };
+        
+        try {
+            const startResponse = await axios.post(startUrl, startPayload, { headers: this.headers });
+            if ((startResponse.status === 201 || startResponse.status === 200) && startResponse.data) {
+                let returnData = startResponse.data;
+                returnData.success = true;
+                return returnData;
+            } else {
+                return { success: false, error: `Lỗi gọi api check daily` };
+            }
+        } catch (error) {
+            return { success: false, error: `Lỗi gọi api check daily: ${error.message}` };
+        }
+    }
+
     async callTapAPI(initData, tapCount) {
         const tapUrl = `https://playback.lovely.finance/tap/${tapCount}`;
         const tapPayload = { initData: initData };
@@ -166,6 +184,14 @@ class LovelyLegends {
                         this.log(`Booster: ${maxBooster - startResult.fullEnergyBonusCount}/${maxBooster} | Last used booster: ${localGivenDate.toLocaleString()}`);
                         this.log(`Coins per tap: ${this.convertNumber(startResult.earnPerTap)}`);
                         this.log(`Lợi nhuận mỗi giây: ${this.convertNumber(startResult.earnPerHour)}`);
+                        let currentTimestamp = Math.floor(Date.now() / 1000);
+                        if(currentTimestamp - startResult.lastDailyClaimTimestamp >= 86400)
+                        {
+                            const checkDailyResult = await this.callCheckDailyAPI(initData);
+                            if (checkDailyResult.success) {
+                                this.log(`Daily checking thành công`, 'success');
+                            }
+                        }
                     }
 
                     if (startResult.energy !== undefined) {
