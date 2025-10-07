@@ -61,7 +61,7 @@ class LovelyLegends {
             process.stdout.write(`===== Chờ ${i} giây để tiếp tục vòng lặp =====`);
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
-        console.log('');
+        console.log('End countdown');
     }
 
     async callStartAPI(initData) {
